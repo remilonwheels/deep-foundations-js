@@ -1,5 +1,8 @@
 function initUI() {
-	$workEntryForm = $("[rel*=js-work-entry-form");
+	// FIX
+	// $workEntryForm = $("[rel*=js-work-entry-form");
+	$workEntryForm = $("[rel*=js-work-entry-form]");
+
 	$workEntrySelectProject = $workEntryForm.find("[rel*=js-select-project]");
 	$workEntryDescription = $workEntryForm.find("[rel*=js-work-description]");
 	$workEntryTime = $workEntryForm.find("[rel*=js-work-time]");
@@ -8,6 +11,8 @@ function initUI() {
 	$projectList = $("[rel*=js-project-list]");
 
 	var handleClick = function(){
+		console.log('in click');
+		console.log('time', $workEntryTime.val());
 		var projectId = $workEntrySelectProject.val();
 		var description = $workEntryDescription.val();
 		var minutes = $workEntryTime.val();
@@ -20,8 +25,8 @@ function initUI() {
 
 		$workEntryDescription.val("");
 		$workEntryTime.val("");
-		addWorkToProject(projectId,description,minutes);
 		$workEntryDescription[0].focus();
+		addWorkToProject(Number(projectId),description,Number(minutes));
 	};
 
 	$workEntrySubmit.on("click",handleClick);
@@ -29,6 +34,16 @@ function initUI() {
 
 function validateWorkEntry(description,minutes) {
 	// TODO
+	if (description.length < 5) return false;
+ 	if (
+ 		/^\s*$/.test(minutes) ||
+ 		Number.isNaN(Number(minutes)) ||
+ 		minutes < 0 ||
+		minutes >	600
+ 	) {
+ 		return false;
+ 	}
+ 	return true;
 }
 
 function addProject(description) {
