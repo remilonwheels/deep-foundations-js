@@ -48,7 +48,9 @@ function validateWorkEntry(description,minutes) {
 
 function addProject(description) {
 	var projectId = Math.round(Math.random()*1E4);
-	var projectEntryData = { id: projectId, description: description, work: [] };
+
+	// var projectEntryData = { id: projectId, description: description, work: [] };
+	var projectEntryData = { id: projectId, description: description, work: [], time: 0 };
 	projects.push(projectEntryData);
 
 	addProjectToList(projectEntryData);
